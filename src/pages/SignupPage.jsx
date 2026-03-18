@@ -91,36 +91,37 @@ export default function SignupPage() {
               type="email"
               value={form.email}
               onChange={handleChange}
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
               placeholder="you@example.com"
             />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-slate-700">Address</label>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Address</label>
             <input
               required
               name="address"
               value={form.address}
               onChange={handleChange}
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
               placeholder="123 Somewhere Ave, Somewhere"
             />
-          </div>
+            </div>
         </div>
 
-        <div className="space-y-6 rounded-3xl bg-white/80 p-8 shadow-soft">
-          <h2 className="text-lg font-semibold text-slate-900">Selected plan</h2>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-            <p className="text-sm font-semibold text-slate-700">{selectedPlan.name}</p>
-            <p className="mt-1 text-sm text-slate-600">{selectedPlan.speed} Mbps</p>
-            <p className="mt-3 text-2xl font-semibold text-slate-900">{selectedPlan.price} / month</p>
-            <ul className="mt-4 space-y-2 text-sm text-slate-600">
+        <div className="space-y-6 rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl">
+          <h2 className="text-lg font-semibold text-slate-900">Selected Plan</h2>
+          <div className="rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50 to-blue-50 p-6">
+            <p className="text-2xl font-bold text-slate-900">{selectedPlan.name}</p>
+            <p className="mt-2 text-lg text-brand-600 font-semibold">{selectedPlan.speed} Mbps</p>
+            <p className="mt-4 text-3xl font-bold text-slate-900">KES {selectedPlan.price}<span className="text-lg text-slate-600 font-normal"> / month</span></p>
+            <ul className="mt-6 space-y-3">
               {selectedPlan.features.map((feature) => (
-                <li key={feature} className="flex items-start gap-2">
-                  <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                <li key={feature} className="flex items-start gap-3">
+                  <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-white text-sm flex-shrink-0">
                     ✓
                   </span>
-                  {feature}
+                  <span className="text-slate-700">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -128,18 +129,18 @@ export default function SignupPage() {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-brand-500/30 hover:bg-brand-700"
+            className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white py-3 rounded-xl font-semibold hover:from-brand-700 hover:to-brand-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             disabled={submitted}
           >
-            {submitted ? 'Setting up your account…' : 'Create account'}
+            {submitted ? 'Setting up your account…' : 'Create Account'}
           </button>
 
           {submitted ? (
-            <p className="text-sm text-emerald-700">
-              Success! Redirecting you to your dashboard…
+            <p className="text-center text-emerald-600 font-medium">
+              ✓ Success! Redirecting you to your dashboard…
             </p>
           ) : (
-            <p className="text-sm text-slate-600">
+            <p className="text-center text-slate-600 text-sm">
               You can change your plan and billing preferences from your dashboard.
             </p>
           )}
