@@ -34,10 +34,8 @@ export default function Navbar() {
     <header className="bg-white/80 backdrop-blur border-b border-slate-200 sticky top-0 z-30">
       <div className="container flex items-center justify-between py-4">
         <Link to="/" className="flex items-center gap-2 text-brand-600 font-semibold text-lg">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 text-brand-700 font-bold">
-            SKT
-          </span>
-          <span className="hidden sm:inline">SKT Networks</span>
+          <img src="/src/assets/SDN initials.png" alt="SKY DOT NETWORKS" className="h-10 w-10 rounded-xl" />
+          <span className="hidden sm:inline">SKY DOT NETWORKS</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-2">

@@ -42,7 +42,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center py-12 px-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
         <h1 className="text-3xl font-bold text-slate-900 mb-2">Login</h1>
-        <p className="text-slate-600 mb-6">Access your SKT Networks account</p>
+        <p className="text-slate-600 mb-6">Access your SKY DOT NETWORKS account</p>
 
         {status.message && (
           <div className={`mb-4 p-3 rounded-lg text-sm font-medium ${

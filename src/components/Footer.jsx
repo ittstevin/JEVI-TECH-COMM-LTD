@@ -50,7 +50,7 @@ export default function Footer() {
 
       <div className="border-t border-slate-700 py-6">
         <div className="container flex flex-col items-center justify-between gap-4 text-sm text-slate-400 md:flex-row">
-          <p>© {new Date().getFullYear()} SKT Networks. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} SKY DOT NETWORKS. All rights reserved.</p>
           <p className="text-xs">
             Premium Internet Services | Kenya
           </p>
