@@ -39,63 +39,102 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-brand-600 to-brand-700 flex items-center justify-center py-12 px-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Login</h1>
-        <p className="text-slate-600 mb-6">Access your SKY DOT NETWORKS account</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-brand-600 to-brand-700 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-brand-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+      <div className="bg-white/95 backdrop-blur rounded-3xl shadow-2xl max-w-md w-full p-8 relative z-10">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">Welcome Back</h1>
+          <p className="text-slate-600">Access your SKY DOT NETWORKS account</p>
+        </div>
 
         {status.message && (
-          <div className={`mb-4 p-3 rounded-lg text-sm font-medium ${
-            status.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+          <div className={`mb-6 p-4 rounded-xl text-sm font-medium transition-all duration-300 ${
+            status.type === 'success' 
+              ? 'bg-green-50 text-green-700 border border-green-200' 
+              : 'bg-red-50 text-red-700 border border-red-200'
           }`}>
             {status.message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              placeholder="you@example.com"
-              className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-            />
+            <label className="block text-sm font-semibold text-slate-700 mb-3">Email Address</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="you@example.com"
+                className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all duration-200"
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-            />
+            <label className="block text-sm font-semibold text-slate-700 mb-3">Password</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                placeholder="••••••••"
+                className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all duration-200"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-brand-600 text-white py-2 rounded-lg font-semibold hover:bg-brand-700 transition disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white py-3 rounded-xl font-semibold hover:from-brand-700 hover:to-brand-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Signing in...
+              </span>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
 
-        <p className="text-center text-slate-600 text-sm mt-6">
-          Don't have an account? <Link to="/signup" className="text-brand-600 font-semibold hover:underline">Sign up</Link>
-        </p>
+        <div className="mt-8 pt-8 border-t border-slate-200">
+          <p className="text-center text-slate-600 text-sm">
+            Don't have an account? <Link to="/signup" className="text-brand-600 font-semibold hover:text-brand-700 transition">Create one</Link>
+          </p>
+        </div>
 
-        <div className="mt-6 p-4 bg-slate-50 rounded-lg text-xs text-slate-600">
-          <p className="font-semibold mb-2">🔐 Demo Credentials:</p>
-          <p>Email: admin@jevitech.co.ke</p>
-          <p>Password: [Use your admin password]</p>
+        {/* Demo Credentials */}
+        <div className="mt-8 p-5 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200">
+          <p className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+            <span className="text-lg">🔐</span> Demo Credentials
+          </p>
+          <div className="space-y-2 text-sm text-slate-700">
+            <p><span className="font-medium">Email:</span> admin@jevitech.co.ke</p>
+            <p><span className="font-medium">Password:</span> [Use your admin password]</p>
+          </div>
         </div>
       </div>
     </div>
