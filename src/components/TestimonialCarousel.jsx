@@ -40,7 +40,7 @@ export default function TestimonialCarousel() {
   const current = testimonials[currentIndex]
 
   return (
-    <section className="bg-gradient-to-r from-brand-50 to-blue-50 py-16">
+    <section className="bg-gradient-to-r from-brand-50 to-brand-100 py-16">
       <div className="container">
         <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
 

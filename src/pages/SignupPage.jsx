@@ -111,7 +111,7 @@ export default function SignupPage() {
 
         <div className="space-y-6 rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl">
           <h2 className="text-lg font-semibold text-slate-900">Selected Plan</h2>
-          <div className="rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50 to-blue-50 p-6">
+          <div className="rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50 to-brand-100 p-6">
             <p className="text-2xl font-bold text-slate-900">{selectedPlan.name}</p>
             <p className="mt-2 text-lg text-brand-600 font-semibold">{selectedPlan.speed} Mbps</p>
             <p className="mt-4 text-3xl font-bold text-slate-900">KES {selectedPlan.price}<span className="text-lg text-slate-600 font-normal"> / month</span></p>
