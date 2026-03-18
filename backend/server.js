@@ -12,6 +12,8 @@ import paymentRoutes from './routes/paymentRoutes.js'
 import ticketRoutes from './routes/ticketRoutes.js'
 import installationRoutes from './routes/installationRoutes.js'
 import networkRoutes from './routes/networkRoutes.js'
+import testimonialRoutes from './routes/testimonialRoutes.js'
+import messageRoutes from './routes/messageRoutes.js'
 
 // Load environment variables
 dotenv.config()
@@ -49,6 +51,8 @@ app.use('/api/payments', paymentRoutes)
 app.use('/api/tickets', ticketRoutes)
 app.use('/api/installations', installationRoutes)
 app.use('/api/network', networkRoutes)
+app.use('/api/testimonials', testimonialRoutes)
+app.use('/api/messages', messageRoutes)
 
 // 404 handler
 app.use(notFound)

@@ -5,19 +5,41 @@ export default function ContactPage() {
     name: '',
     email: '',
     phone: '',
+    subject: '',
     message: '',
   })
   const [status, setStatus] = useState({ type: '', message: '' })
+  const [loading, setLoading] = useState(false)
 
   function handleChange(event) {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setStatus({ type: 'success', message: 'Thank you! We will be in touch soon.' })
-    setForm({ name: '', email: '', phone: '', message: '' })
+    setLoading(true)
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      
+      const data = await response.json()
+      if (response.ok) {
+        setStatus({ type: 'success', message: '✅ Message sent! We\'ll respond within 24 hours.' })
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' })
+        setTimeout(() => setStatus({ type: '', message: '' }), 5000)
+      } else {
+        setStatus({ type: 'error', message: `❌ Error: ${data.error || 'Failed to send message'}` })
+      }
+    } catch (error) {
+      setStatus({ type: 'error', message: '❌ Failed to send message. Please try again.' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

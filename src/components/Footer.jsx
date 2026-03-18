@@ -2,60 +2,57 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer className="bg-white/80 backdrop-blur border-t border-slate-200">
-      <div className="container grid gap-8 py-10 md:grid-cols-3">
+    <footer className="bg-slate-900 text-white">
+      <div className="container grid gap-8 py-12 md:grid-cols-4">
         <div>
-          <h3 className="text-base font-semibold text-slate-900">JEVI-TECH COMM LTD</h3>
-          <p className="mt-2 text-sm text-slate-600">Fast Internet for Kiambu</p>
-          <div className="mt-4 space-y-1 text-sm text-slate-600">
+          <h3 className="text-lg font-bold">SKT Networks</h3>
+          <p className="mt-2 text-sm text-slate-300">Premium Internet Services for Everyone</p>
+          <div className="mt-4 space-y-2 text-sm text-slate-300">
             <p>
-              <span className="font-semibold text-slate-900">Phone:</span> +254 720 593 380
+              <span className="font-semibold">Phone:</span> +254 793 208 000
             </p>
             <p>
-              <span className="font-semibold text-slate-900">Email:</span> fusedlens@gmail.com
+              <span className="font-semibold">Email:</span> skydotnetworks@gmail.com
             </p>
           </div>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-slate-900">Coverage Areas</h4>
-          <ul className="mt-3 space-y-2 text-sm text-slate-600">
-            <li>Kiambu Town</li>
-            <li>Kirigiti</li>
-            <li>Riabai</li>
-            <li>Mugumo</li>
-            <li>Ndumberi</li>
-            <li>Kanunga</li>
+          <h4 className="font-semibold mb-3">Services</h4>
+          <ul className="space-y-2 text-sm text-slate-300">
+            <li><Link to="/services#ftth" className="hover:text-white">Fiber Internet (FTTH)</Link></li>
+            <li><Link to="/services#wireless" className="hover:text-white">Wireless Internet</Link></li>
+            <li><Link to="/services#business" className="hover:text-white">Business Internet</Link></li>
+            <li><Link to="/services#support" className="hover:text-white">24/7 Support</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-slate-900">Quick Links</h4>
-          <ul className="mt-3 space-y-2 text-sm text-slate-600">
-            <li>
-              <Link to="/plans" className="hover:text-slate-900">
-                Plans
-              </Link>
-            </li>
-            <li>
-              <Link to="/coverage" className="hover:text-slate-900">
-                Coverage
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-slate-900">
-                Contact
-              </Link>
-            </li>
+          <h4 className="font-semibold mb-3">Quick Links</h4>
+          <ul className="space-y-2 text-sm text-slate-300">
+            <li><Link to="/" className="hover:text-white">Home</Link></li>
+            <li><Link to="/plans" className="hover:text-white">Plans</Link></li>
+            <li><Link to="/coverage" className="hover:text-white">Coverage</Link></li>
+            <li><Link to="/support" className="hover:text-white">Support</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold mb-3">Company</h4>
+          <ul className="space-y-2 text-sm text-slate-300">
+            <li><Link to="/contact" className="hover:text-white">Contact Us</Link></li>
+            <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" className="hover:text-white">Terms & Conditions</a></li>
+            <li><a href="#" className="hover:text-white">Blog</a></li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-slate-200 py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 text-sm text-slate-500 md:flex-row">
-          <p>© {new Date().getFullYear()} JEVI-TECH COMM LTD. All rights reserved.</p>
+      <div className="border-t border-slate-700 py-6">
+        <div className="container flex flex-col items-center justify-between gap-4 text-sm text-slate-400 md:flex-row">
+          <p>© {new Date().getFullYear()} SKT Networks. All rights reserved.</p>
           <p className="text-xs">
-            Built with React + Tailwind.
+            Premium Internet Services | Kenya
           </p>
         </div>
       </div>

@@ -75,7 +75,7 @@ export default function SignupPage() {
               value={form.phone}
               onChange={handleChange}
               className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-              placeholder="(555) 123-4567"
+              placeholder="+254 712 345 678"
             />
           </div>
           <div>
@@ -98,7 +98,7 @@ export default function SignupPage() {
               value={form.address}
               onChange={handleChange}
               className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-              placeholder="123 Maple Ave, Downtown"
+              placeholder="123 Somewhere Ave, Somewhere"
             />
           </div>
         </div>
