@@ -5,14 +5,14 @@ export default function Footer() {
     <footer className="bg-slate-900 text-white">
       <div className="container grid gap-8 py-12 md:grid-cols-4">
         <div>
-          <h3 className="text-lg font-bold">SKT Networks</h3>
+          <h3 className="text-lg font-bold">SKY DOT NETWORKS</h3>
           <p className="mt-2 text-sm text-slate-300">Premium Internet Services for Everyone</p>
           <div className="mt-4 space-y-2 text-sm text-slate-300">
             <p>
-              <span className="font-semibold">Phone:</span> +254 793 208 000
+              <span className="font-semibold">Phone:</span> <a href="tel:+254793208000" className="hover:text-white">+254 793 208 000</a>
             </p>
             <p>
-              <span className="font-semibold">Email:</span> skydotnetworks@gmail.com
+              <span className="font-semibold">Email:</span> <a href="mailto:skydotnetworks@gmail.com" className="hover:text-white">skydotnetworks@gmail.com</a>
             </p>
           </div>
         </div>
