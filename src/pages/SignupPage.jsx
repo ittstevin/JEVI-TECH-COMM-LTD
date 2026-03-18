@@ -58,29 +58,33 @@ export default function SignupPage() {
         <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-6 rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl">
             <h2 className="text-lg font-semibold text-slate-900">Your Information</h2>
-            <label className="text-sm font-semibold text-slate-700">Full name</label>
+            
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
             <input
               required
               name="fullName"
               value={form.fullName}
               onChange={handleChange}
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-              placeholder="Jane Doe"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-slate-700">Phone number</label>
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
+                placeholder="Jane Doe"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
             <input
               required
               name="phone"
               value={form.phone}
               onChange={handleChange}
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-              placeholder="+254 712 345 678"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-slate-700">Email</label>
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
+                placeholder="+254 712 345 678"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
             <input
               required
               name="email"
