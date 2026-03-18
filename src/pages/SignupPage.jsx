@@ -46,17 +46,18 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="space-y-10">
-      <header className="rounded-3xl bg-white/80 p-8 shadow-soft">
-        <h1 className="text-3xl font-semibold text-slate-900">Sign up for service</h1>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-2xl">
+        <div className="rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl mb-8">
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">Create Your Account</h1>
         <p className="mt-2 text-sm text-slate-600">
           Fill in your details and we’ll get your connection up and running.
-        </p>
-      </header>
+          </p>
+        </div>
 
-      <form onSubmit={handleSubmit} className="grid gap-8 md:grid-cols-2">
-        <div className="space-y-6 rounded-3xl bg-white/80 p-8 shadow-soft">
-          <div>
+        <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-2">
+          <div className="space-y-6 rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl">
+            <h2 className="text-lg font-semibold text-slate-900">Your Information</h2>
             <label className="text-sm font-semibold text-slate-700">Full name</label>
             <input
               required
