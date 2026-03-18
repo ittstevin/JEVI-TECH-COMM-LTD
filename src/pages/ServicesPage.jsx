@@ -5,7 +5,6 @@ export default function ServicesPage() {
       title: 'Fiber Internet Installation (FTTH)',
       description: 'Ultra-fast fiber-to-the-home internet with speeds up to 1Gbps',
       features: ['High-speed connectivity', 'Low latency', 'Future-proof technology', 'Reliable 99.9% uptime'],
-      icon: '🌐',
       image: '/src/assets/servicesPage/fiber optics.jpg'
     },
     {
@@ -13,7 +12,6 @@ export default function ServicesPage() {
       title: 'Wireless Internet (Fixed Wireless Access)',
       description: 'Fast wireless connectivity without fiber infrastructure',
       features: ['Quick deployment', 'Wide coverage', 'No installation hassle', 'Flexible plans'],
-      icon: '📡',
       image: '/src/assets/servicesPage/wireless internet.jpg'
     },
     {
@@ -21,7 +19,6 @@ export default function ServicesPage() {
       title: 'Business Dedicated Internet (DIA)',
       description: 'Enterprise-grade dedicated connections with guaranteed bandwidth',
       features: ['Dedicated bandwidth', 'SLA guarantee', 'Priority support', 'Scalable solutions'],
-      icon: '🏢',
       image: '/src/assets/servicesPage/business internet.jpg'
     },
     {
@@ -29,7 +26,6 @@ export default function ServicesPage() {
       title: 'Home Broadband Packages',
       description: 'Affordable internet plans for every household',
       features: ['Multiple speed options', 'No data caps', 'Affordable pricing', 'Easy installation'],
-      icon: '🏠',
       image: '/src/assets/servicesPage/home internet.jpg'
     },
     {
@@ -37,7 +33,6 @@ export default function ServicesPage() {
       title: 'Network Setup & Configuration',
       description: 'Professional network installation and optimization',
       features: ['Expert installation', 'Device configuration', 'Network optimization', 'Testing & support'],
-      icon: '⚙️',
       image: '/src/assets/servicesPage/Network Setup.jpg'
     },
     {
@@ -45,7 +40,6 @@ export default function ServicesPage() {
       title: 'Router Sales & Configuration',
       description: 'Premium routers and networking equipment with configuration service',
       features: ['Latest equipment', 'Professional setup', 'Warranty included', 'Technical support'],
-      icon: '📶',
       image: '/src/assets/servicesPage/Router Sales.jpg'
     },
     {
@@ -53,7 +47,6 @@ export default function ServicesPage() {
       title: 'Managed Wi-Fi Services',
       description: 'Complete Wi-Fi management for homes and businesses',
       features: ['Coverage optimization', 'Security management', 'Regular monitoring', 'Update management'],
-      icon: '📡',
       image: '/src/assets/servicesPage/Managed Wi-Fi Services.jpg'
     },
     {
@@ -61,7 +54,6 @@ export default function ServicesPage() {
       title: 'Network Security (Firewalls, Monitoring)',
       description: 'Comprehensive network security and monitoring solutions',
       features: ['24/7 monitoring', 'DDoS protection', 'Threat detection', 'Security reports'],
-      icon: '🔒',
       image: '/src/assets/servicesPage/Network Security.jpg'
     },
     {
@@ -69,7 +61,6 @@ export default function ServicesPage() {
       title: 'VoIP & Business Telephony',
       description: 'Professional business phone systems and VoIP services',
       features: ['Crystal clear calls', 'Call forwarding', 'Voicemail to email', 'Mobile integration'],
-      icon: '☎️',
       image: '/src/assets/servicesPage/Business Telephony.jpg'
     },
     {
@@ -77,7 +68,6 @@ export default function ServicesPage() {
       title: 'CCTV & Smart Surveillance Integration',
       description: 'Professional CCTV and surveillance system installation and integration',
       features: ['HD cameras', 'Remote monitoring', 'Cloud storage', 'Smart alerts'],
-      icon: '📹',
       image: '/src/assets/servicesPage/CCTV.jpg'
     },
     {
@@ -85,7 +75,6 @@ export default function ServicesPage() {
       title: 'Cloud Backup & Storage Solutions',
       description: 'Secure cloud backup and storage for your data',
       features: ['Automated backups', 'Encryption', '99.99% uptime', 'Easy recovery'],
-      icon: '☁️',
       image: '/src/assets/servicesPage/cloud.jpg'
     },
     {
@@ -93,7 +82,6 @@ export default function ServicesPage() {
       title: 'Website Hosting & Domain Services',
       description: 'Reliable web hosting and domain registration services',
       features: ['Fast hosting', 'SSL certificates', 'Email hosting', '24/7 support'],
-      icon: '🌍',
       image: '/src/assets/servicesPage/web hosting.jpg'
     },
     {
@@ -101,7 +89,6 @@ export default function ServicesPage() {
       title: '24/7 Technical Support',
       description: 'Round-the-clock technical support team ready to help',
       features: ['Phone support', 'Live chat', 'Email tickets', 'Remote assistance'],
-      icon: '📞',
       image: '/src/assets/servicesPage/support.jpg'
     },
     {
@@ -109,7 +96,6 @@ export default function ServicesPage() {
       title: 'SLA-based Enterprise Support Plans',
       description: 'Premium support with guaranteed response times and SLAs',
       features: ['Guaranteed response time', 'Dedicated support', 'Priority escalation', 'Custom SLAs'],
-      icon: '⭐',
       image: '/src/assets/servicesPage/SLA.jpg'
     }
   ]
@@ -145,7 +131,6 @@ export default function ServicesPage() {
                   />
                 </div>
                 <div className="p-8">
-                  <div className="text-5xl mb-4">{service.icon}</div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
                   <p className="text-slate-600 mb-4">{service.description}</p>
                   <ul className="space-y-2">
