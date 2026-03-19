@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   const isAuthPage = location.pathname === '/login' || location.pathname === '/signup'
 
   return (
-    <div className={`min-h-screen flex flex-col ${isAuthPage ? 'bg-slate-900' : 'bg-gradient-to-b from-slate-50 via-white to-slate-100'}`}>
+    <div className={`min-h-screen flex flex-col ${isAuthPage ? 'bg-white' : 'bg-gradient-to-b from-slate-50 via-white to-slate-100'}`}>
       {!isAuthPage && <Navbar />}
       <main className={isAuthPage ? 'flex-1' : 'flex-1 container py-10'}>{children}</main>
       {!isAuthPage && <Footer />}
