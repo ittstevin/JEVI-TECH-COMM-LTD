@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { firestoreHelpers } from '../lib/firestoreHelpers'
 
 const faqs = [
   {
@@ -33,6 +34,30 @@ export default function SupportPage() {
   ])
   const [draft, setDraft] = useState('')
 
+  const [serviceStatus, setServiceStatus] = useState([])
+  const [statusLoading, setStatusLoading] = useState(true)
+  const [statusError, setStatusError] = useState('')
+
+  useEffect(() => {
+    const load = async () => {
+      setStatusLoading(true)
+      setStatusError('')
+      const { data, error } = await firestoreHelpers.getCollection('serviceStatus')
+      if (error) {
+        setStatusError(error)
+        setServiceStatus([])
+      } else {
+        setServiceStatus(data || [])
+      }
+      setStatusLoading(false)
+    }
+
+    load().catch((err) => {
+      setStatusError(err.message || 'Unable to load service status')
+      setStatusLoading(false)
+    })
+  }, [])
+
   function sendMessage() {
     if (!draft.trim()) return
     const userMessage = { from: 'user', text: draft.trim() }
@@ -53,6 +78,38 @@ export default function SupportPage() {
           Browse FAQs, submit a request, or chat with our support bot in real time.
         </p>
       </header>
+
+      <section className="rounded-3xl bg-white/80 p-8 shadow-soft">
+        <h2 className="text-xl font-semibold text-slate-900">Network Status</h2>
+        {statusLoading ? (
+          <p className="mt-3 text-sm text-slate-600">Loading current service status...</p>
+        ) : statusError ? (
+          <p className="mt-3 text-sm text-red-600">Error loading service status: {statusError}</p>
+        ) : serviceStatus.length === 0 ? (
+          <p className="mt-3 text-sm text-slate-600">No service status data available.</p>
+        ) : (
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            {serviceStatus.map((item) => (
+              <div key={item.id} className="rounded-xl border border-slate-200 p-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-semibold text-slate-900">{item.name}</h3>
+                  <span
+                    className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
+                      item.status === 'ok' ? 'bg-emerald-100 text-emerald-700' :
+                      item.status === 'degraded' ? 'bg-amber-100 text-amber-700' :
+                      item.status === 'down' ? 'bg-rose-100 text-rose-700' :
+                      'bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    {item.status || 'unknown'}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-slate-600">{item.note || 'No details provided.'}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="rounded-3xl bg-white/80 p-8 shadow-soft lg:col-span-2">
@@ -81,32 +138,16 @@ export default function SupportPage() {
           </div>
 
           <div className="mt-10 rounded-3xl border border-slate-200 bg-white p-6">
-            <h3 className="text-lg font-semibold text-slate-900">Send us a message</h3>
+            <h3 className="text-lg font-semibold text-slate-900">Need to reach us?</h3>
             <p className="mt-2 text-sm text-slate-600">
-              Fill out the form and we’ll get back to you within 24 hours.
+              For direct messages, go to the Contact page where you can submit a ticket and track responses.
             </p>
-            <form className="mt-6 grid gap-4">
-              <div>
-                <label className="text-sm font-semibold text-slate-700">Subject</label>
-                <input
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-                  placeholder="Account issue"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-semibold text-slate-700">Message</label>
-                <textarea
-                  className="mt-2 h-28 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-                  placeholder="Tell us what’s going on..."
-                />
-              </div>
-              <button
-                type="button"
-                className="w-full rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-700"
-              >
-                Submit request
-              </button>
-            </form>
+            <a
+              href="/contact"
+              className="inline-block mt-4 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-700"
+            >
+              Go to Contact Page
+            </a>
           </div>
         </section>
 
