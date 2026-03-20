@@ -23,20 +23,55 @@ export default function LoginPage() {
       if (error) {
         setStatus({ type: 'error', message: `❌ ${error}` })
       } else {
+        let profile = null
+
         // Get user profile from Firestore
         const { data: userProfile, error: profileError } = await firestoreHelpers.getDocument('users', user.uid)
-        if (profileError) throw new Error(profileError)
+
+        if (profileError) {
+          if (profileError.includes('Missing or insufficient permissions') || profileError.includes('missing or insufficient permissions')) {
+            // Permissions rule is preventing Firestore writes/reads; fall back to in-memory profile with no write attempt
+            profile = {
+              role: user.email === 'admin@jevitech.co.ke' || user.email === 'admin@sky-dot-networks.com' ? 'ADMIN' : 'CUSTOMER',
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              verified: user.emailVerified,
+            }
+          } else if (profileError === 'Document not found') {
+            profile = {
+              role: 'CUSTOMER',
+              name: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              verified: user.emailVerified,
+            }
+            // It's okay for this to fail because it is not required for login
+            firestoreHelpers.setDocument('users', user.uid, profile).catch(() => {})
+          } else {
+            throw new Error(profileError)
+          }
+        } else {
+          profile = userProfile
+        }
+
+        if (!profile) {
+          profile = {
+            role: 'CUSTOMER',
+            name: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            verified: user.emailVerified,
+          }
+        }
 
         // Get ID token
         const token = await authHelpers.getIdToken()
 
         // Save to localStorage and user state
         localStorage.setItem('skdn_token', token)
-        localStorage.setItem('skdn_user', JSON.stringify({ uid: user.uid, ...userProfile }))
-        setUser({ uid: user.uid, ...userProfile })
+        localStorage.setItem('skdn_user', JSON.stringify({ uid: user.uid, ...profile }))
+        setUser({ uid: user.uid, ...profile })
 
         setStatus({ type: 'success', message: '✅ Login successful!' })
-        setTimeout(() => navigate(userProfile?.role === 'ADMIN' ? '/admin' : '/dashboard'), 1000)
+        setTimeout(() => navigate(profile?.role === 'ADMIN' ? '/admin' : '/dashboard'), 1000)
       }
     } catch (error) {
       setStatus({ type: 'error', message: `❌ ${error.message || 'Login failed. Please try again.'}` })

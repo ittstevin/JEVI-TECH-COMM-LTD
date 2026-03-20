@@ -9,8 +9,6 @@ import {
   where,
   updateDoc,
   deleteDoc,
-  orderBy,
-  limit,
   Timestamp,
 } from 'firebase/firestore'
 import { firestore } from './firebase'

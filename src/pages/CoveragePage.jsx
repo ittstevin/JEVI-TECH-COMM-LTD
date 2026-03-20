@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { checkCoverage } from '../services/coverage'
 
 export default function CoveragePage() {
   const coverageAreas = [

@@ -35,7 +35,7 @@ export default function ContactPage() {
       } else {
         setStatus({ type: 'error', message: `❌ Error: ${data.error || 'Failed to send message'}` })
       }
-    } catch (error) {
+    } catch {
       setStatus({ type: 'error', message: '❌ Failed to send message. Please try again.' })
     } finally {
       setLoading(false)
@@ -133,9 +133,10 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-700"
+                disabled={loading}
+                className="w-full rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 disabled:opacity-50"
               >
-                Send message
+                {loading ? 'Sending...' : 'Send message'}
               </button>
             </form>
           </div>

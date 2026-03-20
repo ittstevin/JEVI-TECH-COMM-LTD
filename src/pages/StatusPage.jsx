@@ -9,7 +9,7 @@ const services = [
 
 export default function StatusPage() {
   const [currentServices, setCurrentServices] = useState(services)
-  const [lastUpdated, setLastUpdated] = useState(Date.now())
+  const [lastUpdated, setLastUpdated] = useState(() => Date.now())
 
   useEffect(() => {
     const id = window.setInterval(() => {
