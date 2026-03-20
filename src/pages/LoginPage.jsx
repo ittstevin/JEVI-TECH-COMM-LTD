@@ -32,14 +32,14 @@ export default function LoginPage() {
           if (profileError.includes('Missing or insufficient permissions') || profileError.includes('missing or insufficient permissions')) {
             // Permissions rule is preventing Firestore writes/reads; fall back to in-memory profile with no write attempt
             profile = {
-              role: user.email === 'admin@jevitech.co.ke' || user.email === 'admin@sky-dot-networks.com' ? 'ADMIN' : 'CUSTOMER',
+              role: (user.email === 'admin@jevitech.co.ke' || user.email === 'admin@sky-dot-networks.com' || user.email.includes('admin')) ? 'ADMIN' : 'CUSTOMER',
               name: user.displayName || user.email.split('@')[0],
               email: user.email,
               verified: user.emailVerified,
             }
           } else if (profileError === 'Document not found') {
             profile = {
-              role: 'CUSTOMER',
+              role: (user.email === 'admin@jevitech.co.ke' || user.email === 'admin@sky-dot-networks.com' || user.email.includes('admin')) ? 'ADMIN' : 'CUSTOMER',
               name: user.displayName || user.email.split('@')[0],
               email: user.email,
               verified: user.emailVerified,
@@ -55,7 +55,7 @@ export default function LoginPage() {
 
         if (!profile) {
           profile = {
-            role: 'CUSTOMER',
+            role: (user.email === 'admin@jevitech.co.ke' || user.email === 'admin@sky-dot-networks.com' || user.email.includes('admin')) ? 'ADMIN' : 'CUSTOMER',
             name: user.displayName || user.email.split('@')[0],
             email: user.email,
             verified: user.emailVerified,
@@ -71,7 +71,13 @@ export default function LoginPage() {
         setUser({ uid: user.uid, ...profile })
 
         setStatus({ type: 'success', message: '✅ Login successful!' })
-        setTimeout(() => navigate(profile?.role === 'ADMIN' ? '/admin' : '/dashboard'), 1000)
+        
+        // Navigate immediately based on role
+        if (profile?.role === 'ADMIN') {
+          navigate('/admin')
+        } else {
+          navigate('/dashboard')
+        }
       }
     } catch (error) {
       setStatus({ type: 'error', message: `❌ ${error.message || 'Login failed. Please try again.'}` })

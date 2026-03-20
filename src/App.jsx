@@ -13,10 +13,11 @@ import PaymentPage from './pages/PaymentPage'
 import SupportPage from './pages/SupportPage'
 import StatusPage from './pages/StatusPage'
 import NotFoundPage from './pages/NotFoundPage'
+import { getUser } from './services/user'
 
 export default function App() {
   const token = localStorage.getItem('skdn_token')
-  const user = JSON.parse(localStorage.getItem('skdn_user') || 'null')
+  const user = getUser()
 
   return (
     <BrowserRouter>

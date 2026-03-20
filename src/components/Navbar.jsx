@@ -78,12 +78,14 @@ export default function Navbar() {
                     <p className="text-xs text-slate-500">{user.email}</p>
                   </div>
                   <div className="p-2">
-                    <button
-                      onClick={goToDashboard}
-                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded mb-1"
-                    >
-                      📊 Dashboard
-                    </button>
+                    {user.role !== 'ADMIN' && (
+                      <button
+                        onClick={goToDashboard}
+                        className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded mb-1"
+                      >
+                        📊 Dashboard
+                      </button>
+                    )}
                     {user.role === 'ADMIN' && (
                       <button
                         onClick={goToAdminDashboard}

@@ -4,6 +4,7 @@ import { getPlanById } from '../services/plans'
 import { clearUser, getUser, setUser } from '../services/user'
 
 function formatDate(timestamp) {
+  if (!timestamp) return 'Not set'
   const date = new Date(timestamp)
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
 }
@@ -14,8 +15,12 @@ export default function DashboardPage() {
   const [usage, setUsage] = useState({ used: 0, limit: 1000 })
   const [isRenewing, setIsRenewing] = useState(false)
 
-  const plan = useMemo(() => getPlanById(user?.subscription?.planId), [user])
-  const nextBilling = user?.subscription?.nextBilling
+  useEffect(() => {
+    if (user?.role === 'ADMIN') {
+      navigate('/admin')
+      return
+    }
+  }, [user, navigate])
 
   useEffect(() => {
     // Simulate usage tracking
@@ -29,6 +34,21 @@ export default function DashboardPage() {
     return () => window.clearInterval(id)
   }, [])
 
+  // Calculate default next billing date once
+  const [defaultNextBilling] = useState(() => Date.now() + 30 * 24 * 60 * 60 * 1000)
+
+  // Provide default subscription data if user doesn't have any
+  const defaultSubscription = useMemo(() => ({
+    planId: 'basic',
+    nextBilling: defaultNextBilling,
+    status: 'ACTIVE'
+  }), [defaultNextBilling])
+
+  const subscription = useMemo(() => user?.subscription || defaultSubscription, [user?.subscription, defaultSubscription])
+
+  const plan = useMemo(() => getPlanById(subscription.planId), [subscription.planId])
+  const nextBilling = subscription.nextBilling
+
   function handleRenew() {
     if (!user) return
     setIsRenewing(true)
@@ -36,7 +56,7 @@ export default function DashboardPage() {
       const updated = setUser({
         ...user,
         subscription: {
-          ...user.subscription,
+          ...subscription,
           nextBilling: Date.now() + 30 * 24 * 60 * 60 * 1000,
         },
       })
