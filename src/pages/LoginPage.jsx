@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { authHelpers } from '../lib/authHelpers'
+import { firestoreHelpers } from '../lib/firestoreHelpers'
+import { setUser } from '../services/user'
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -16,23 +19,27 @@ export default function LoginPage() {
     setLoading(true)
     
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      
-      const data = await response.json()
-      if (response.ok) {
-        localStorage.setItem('skdn_token', data.token)
-        localStorage.setItem('skdn_user', JSON.stringify(data.user))
-        setStatus({ type: 'success', message: '✅ Login successful!' })
-        setTimeout(() => navigate(data.user.role === 'ADMIN' ? '/admin' : '/dashboard'), 1000)
+      const { user, error } = await authHelpers.login(form.email, form.password)
+      if (error) {
+        setStatus({ type: 'error', message: `❌ ${error}` })
       } else {
-        setStatus({ type: 'error', message: `❌ ${data.error || 'Login failed'}` })
+        // Get user profile from Firestore
+        const { data: userProfile, error: profileError } = await firestoreHelpers.getDocument('users', user.uid)
+        if (profileError) throw new Error(profileError)
+
+        // Get ID token
+        const token = await authHelpers.getIdToken()
+
+        // Save to localStorage and user state
+        localStorage.setItem('skdn_token', token)
+        localStorage.setItem('skdn_user', JSON.stringify({ uid: user.uid, ...userProfile }))
+        setUser({ uid: user.uid, ...userProfile })
+
+        setStatus({ type: 'success', message: '✅ Login successful!' })
+        setTimeout(() => navigate(userProfile?.role === 'ADMIN' ? '/admin' : '/dashboard'), 1000)
       }
     } catch (error) {
-      setStatus({ type: 'error', message: '❌ Connection error. Please try again.' })
+      setStatus({ type: 'error', message: `❌ ${error.message || 'Login failed. Please try again.'}` })
     } finally {
       setLoading(false)
     }

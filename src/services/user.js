@@ -1,9 +1,17 @@
-const STORAGE_KEY = 'jevitech_user'
+const STORAGE_KEY = 'skdn_user'
 
 function load() {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : null
+    if (raw) return JSON.parse(raw)
+    // fallback for old key
+    const fallbackRaw = window.localStorage.getItem('jevitech_user')
+    if (fallbackRaw) {
+      const fallbackData = JSON.parse(fallbackRaw)
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fallbackData))
+      return fallbackData
+    }
+    return null
   } catch {
     return null
   }

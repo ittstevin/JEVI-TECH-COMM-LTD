@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getPlanById } from '../services/plans'
 import { setUser } from '../services/user'
+import { authHelpers } from '../lib/authHelpers'
+import { firestoreHelpers } from '../lib/firestoreHelpers'
 
 export default function SignupPage() {
   const [searchParams] = useSearchParams()
@@ -13,36 +15,82 @@ export default function SignupPage() {
     fullName: '',
     phone: '',
     email: '',
+    password: '',
     address: '',
     plan: selectedPlan.id,
   })
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   function handleChange(event) {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setUser({
-      profile: {
+    setSubmitted(true)
+    
+    try {
+      // Create Firebase auth user
+      const { user, error: authError } = await authHelpers.signup(form.email, form.password)
+      if (authError) {
+        setError(authError)
+        setSubmitted(false)
+        return
+      }
+      
+      // Create user profile in Firestore
+      await firestoreHelpers.setDocument('users', user.uid, {
+        email: form.email,
         name: form.fullName,
         phone: form.phone,
-        email: form.email,
         address: form.address,
-      },
-      subscription: {
+        role: 'CUSTOMER',
+        verified: false,
+        createdAt: new Date(),
+      })
+      
+      // Create subscription
+      const subscriptionData = {
+        userId: user.uid,
         planId: form.plan,
-        startedAt: Date.now(),
-        nextBilling: Date.now() + 30 * 24 * 60 * 60 * 1000,
-      },
-      payments: [],
-    })
-    setSubmitted(true)
-    setTimeout(() => {
-      navigate('/dashboard')
-    }, 1000)
+        status: 'PENDING',
+        startDate: new Date(),
+        renewalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        createdAt: new Date(),
+      }
+      await firestoreHelpers.createDocument('subscriptions', subscriptionData)
+      
+      // Get ID token and save to localStorage
+      const token = await authHelpers.getIdToken()
+      const savedUser = {
+        uid: user.uid,
+        email: form.email,
+        name: form.fullName,
+        phone: form.phone,
+        address: form.address,
+        role: 'CUSTOMER',
+      }
+      localStorage.setItem('skdn_token', token)
+      localStorage.setItem('skdn_user', JSON.stringify(savedUser))
+      setUser({
+        ...savedUser,
+        subscription: {
+          planId: form.plan,
+          startedAt: Date.now(),
+          nextBilling: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        },
+        payments: [],
+      })
+
+      setTimeout(() => {
+        navigate('/dashboard')
+      }, 1500)
+    } catch (err) {
+      setError(err.message)
+      setSubmitted(false)
+    }
   }
 
   return (
@@ -54,6 +102,12 @@ export default function SignupPage() {
           Fill in your details and we’ll get your connection up and running.
           </p>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm font-medium">
+            ❌ {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-6 rounded-3xl bg-white/95 backdrop-blur p-8 shadow-2xl">
@@ -97,6 +151,19 @@ export default function SignupPage() {
             </div>
 
             <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+            <input
+              required
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
+              placeholder="••••••••"
+            />
+            </div>
+
+            <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">Address</label>
             <input
               required
@@ -132,12 +199,12 @@ export default function SignupPage() {
             className="w-full bg-gradient-to-r from-brand-600 to-brand-700 text-white py-3 rounded-xl font-semibold hover:from-brand-700 hover:to-brand-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             disabled={submitted}
           >
-            {submitted ? 'Setting up your account…' : 'Create Account'}
+            {submitted ? 'Creating your account…' : 'Create Account'}
           </button>
 
           {submitted ? (
             <p className="text-center text-emerald-600 font-medium">
-              ✓ Success! Redirecting you to your dashboard…
+              ✓ Account created! Redirecting to your dashboard…
             </p>
           ) : (
             <p className="text-center text-slate-600 text-sm">
