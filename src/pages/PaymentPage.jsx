@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { addPayment, getPaymentHistory, getUser } from '../services/user'
 import { getPlanById } from '../services/plans'
 import { formatCurrency, formatDate } from '../utils/format'
@@ -9,8 +10,18 @@ const paymentMethods = [
 ]
 
 export default function PaymentPage() {
+  const [searchParams] = useSearchParams()
   const user = getUser()
-  const plan = useMemo(() => getPlanById(user?.subscription?.planId), [user])
+  
+  // Check if a plan was passed via query params, otherwise use user's current plan
+  const planFromParams = searchParams.get('plan')
+  const plan = useMemo(() => {
+    if (planFromParams) {
+      return getPlanById(planFromParams)
+    }
+    return getPlanById(user?.subscription?.planId)
+  }, [planFromParams, user])
+  
   const [method, setMethod] = useState(paymentMethods[0].id)
   const [isPaying, setIsPaying] = useState(false)
   const [history, setHistory] = useState(getPaymentHistory())

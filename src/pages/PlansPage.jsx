@@ -2,13 +2,22 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PlanCard from '../components/PlanCard'
 import { plans } from '../services/plans'
+import { authHelpers } from '../lib/authHelpers'
 
 export default function PlansPage() {
   const navigate = useNavigate()
   const popularPlan = useMemo(() => plans.find((plan) => plan.bestValue) ?? plans[0], [])
 
   function handleSubscribe(plan) {
-    navigate(`/signup?plan=${encodeURIComponent(plan.id)}`)
+    const currentUser = authHelpers.getCurrentUser()
+    
+    if (currentUser) {
+      // User is already logged in, go to payment page
+      navigate(`/payment?plan=${encodeURIComponent(plan.id)}`)
+    } else {
+      // User is not logged in, go to signup page
+      navigate(`/signup?plan=${encodeURIComponent(plan.id)}`)
+    }
   }
 
   return (
