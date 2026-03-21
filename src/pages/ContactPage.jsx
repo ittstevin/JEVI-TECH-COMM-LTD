@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { firestoreHelpers } from '../lib/firestoreHelpers'
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -19,23 +20,22 @@ export default function ContactPage() {
   async function handleSubmit(event) {
     event.preventDefault()
     setLoading(true)
-    
+
     try {
-      const response = await fetch('http://localhost:5000/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      const { error } = await firestoreHelpers.createDocument('messages', {
+        ...form,
+        status: 'NEW',
+        createdAt: new Date(),
       })
-      
-      const data = await response.json()
-      if (response.ok) {
+
+      if (error) {
+        setStatus({ type: 'error', message: `❌ Error: ${error}` })
+      } else {
         setStatus({ type: 'success', message: '✅ Message sent! We\'ll respond within 24 hours.' })
         setForm({ name: '', email: '', phone: '', subject: '', message: '' })
         setTimeout(() => setStatus({ type: '', message: '' }), 5000)
-      } else {
-        setStatus({ type: 'error', message: `❌ Error: ${data.error || 'Failed to send message'}` })
       }
-    } catch {
+    } catch (err) {
       setStatus({ type: 'error', message: '❌ Failed to send message. Please try again.' })
     } finally {
       setLoading(false)
